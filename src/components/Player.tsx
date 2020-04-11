@@ -29,10 +29,14 @@ class Player extends Component<Props, State> {
 
   state: State = {}
 
+  getFullName = (player: IPlayer) => {
+    return `${player.firstname} ${player.lastname[0]}.`
+  }
+
   render() {
     return (
       <Card>
-        <CardHeader title={this.props.player.name} subheader="J-201 avant anniversaire"></CardHeader>
+        <CardHeader title={this.props.player.firstname} subheader="J-201 avant anniversaire"></CardHeader>
         <CardContent>
           <Grid container style={styles.container}>
             <Typography color="textSecondary" gutterBottom style={styles.counter}>

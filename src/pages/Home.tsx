@@ -1,7 +1,19 @@
 import React, { Component } from 'react';
 import PlayerList from '../components/PlayerList';
+import { connect } from 'react-redux';
+import { croissantActions } from '../actions';
 
-class Home extends Component {
+interface Props {
+  dispatch: Function;
+}
+
+class Home extends Component<Props> {
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(croissantActions.fetchPlayers());
+  }
+
   render() {
     return (
       <div>
@@ -12,4 +24,4 @@ class Home extends Component {
   }
 }
 
-export default Home;
+export default connect()(Home);
