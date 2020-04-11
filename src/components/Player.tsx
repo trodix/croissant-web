@@ -1,49 +1,58 @@
 import React, { Component } from 'react';
 import { Player as IPlayer } from '../types';
-import { Card, CardContent, Typography, CardActions, Button, Theme, createStyles, withStyles, WithStyles, makeStyles } from '@material-ui/core';
+import { Card, CardContent, Typography, CardActions, Button, Theme, createStyles, withStyles, WithStyles, CardHeader, Grid } from '@material-ui/core';
+import CoinCounter from './CoinCounter';
 
-interface Props { player: IPlayer, useStyle?: WithStyles<typeof styles> }
+interface Props { player: IPlayer, key: number | string }
 interface State {}
 
-const styles = (theme: Theme) => createStyles({
-  root: {
-    minWidth: 275,
-  },
+const styles = {
   title: {
+    fontSize: 25,
+    backgroundColor: '#3F51B5',
+    color: '#fff',
+    paddingLeft: 10,
+    paddingRight: 10,
+  },
+  p: {
     fontSize: 14,
   },
-  pos: {
-    marginBottom: 12,
+  counter: {
+    fontSize: 40,
   },
-});
+  container: {
+    justifyContent: 'center',
+  }
+};
 
 class Player extends Component<Props, State> {
 
   state: State = {}
 
-  // render() {
-  //   return (
-  //     <div className="player">
-  //       <p>{ this.props.player.name }</p>
-  //     </div>
-  //   );
-  // }
-
   render() {
-    const classes = this.props?.useStyle?.classes as any;
     return (
-      <div className="player">
-        <Card className={classes?.root}>
-          <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              { this.props.player.name }
+      <Card>
+        <CardHeader title={this.props.player.name} subheader="J-201 avant anniversaire"></CardHeader>
+        <CardContent>
+          <Grid container style={styles.container}>
+            <Typography color="textSecondary" gutterBottom style={styles.counter}>
+            2
             </Typography>
-          </CardContent>
-          <CardActions>
-            <Button size="small">Learn More</Button>
-          </CardActions>
-        </Card>
-      </div>
+            <img src={require('../assets/img/coin.png')} height="48" alt="coin"></img>
+          </Grid>
+          <Typography color="textSecondary" style={styles.p}>
+            Nombre de chaises
+          </Typography>
+          <CoinCounter value={2}></CoinCounter>
+          <Typography color="textSecondary" style={styles.p}>
+            Nombre de portes
+          </Typography>
+          <CoinCounter value={1}></CoinCounter>
+        </CardContent>
+        <CardActions>
+          <Button color="primary">Reset</Button>
+        </CardActions>
+      </Card>
     );
   }
 }

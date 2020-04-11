@@ -1,13 +1,16 @@
 import React from 'react';
-import Header from './shared/Header';
+import Header from './Layout/Header';
 import Home from './pages/Home';
 import './App.css';
+import { Container } from '@material-ui/core';
 
 function App() {
   return (
     <div className="App">
       <Header></Header>
-      <Home></Home>
+      <Container>
+        <Home></Home>
+      </Container>
     </div>
   );
 }
