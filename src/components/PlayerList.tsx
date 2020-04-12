@@ -3,18 +3,19 @@ import React, { Component } from 'react';
 import { Player as IPlayer } from '../types';
 import Player from './Player';
 import { connect } from 'react-redux';
+import { RootState } from '../reducers';
 
-interface Props {}
-interface State { playerList: IPlayer[]; }
+interface Props { playerList: IPlayer[] }
+interface State {}
 
-@connect(({ croissant: { playerList } }) => ({ playerList })) // FIXME
+// @connect(({ croissant: { playerList } }) => ({ playerList })) // TODO
 class PlayerList extends Component<Props, State> {
 
   render() {
     return (
       <Grid container spacing={2}>
         { 
-          playerList.map(player => 
+          this.props.playerList.map(player => 
             <Grid item xs={6} sm={4} md={2}>
               <Player key={player.id} player={player}></Player>
             </Grid>
@@ -25,4 +26,8 @@ class PlayerList extends Component<Props, State> {
   }
 }
 
-export default PlayerList;
+function mapStateToProps(state: RootState): Props {
+  return { playerList: state.croissant.playerList };
+}
+
+export default connect(mapStateToProps)(PlayerList);

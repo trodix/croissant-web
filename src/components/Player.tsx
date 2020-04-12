@@ -36,7 +36,7 @@ class Player extends Component<Props, State> {
   render() {
     return (
       <Card>
-        <CardHeader title={this.props.player.firstname} subheader="J-201 avant anniversaire"></CardHeader>
+        <CardHeader title={this.getFullName(this.props.player)} subheader="J-201 avant anniversaire"></CardHeader>
         <CardContent>
           <Grid container style={styles.container}>
             <Typography color="textSecondary" gutterBottom style={styles.counter}>
