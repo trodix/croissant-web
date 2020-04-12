@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { Player as IPlayer } from '../types';
 import { Card, CardContent, Typography, CardActions, Button, Theme, createStyles, withStyles, WithStyles, CardHeader, Grid } from '@material-ui/core';
 import CoinCounter from './CoinCounter';
+import { differenceInCalendarDays } from 'date-fns';
 
-interface Props { player: IPlayer, key: number | string }
+interface Props { player: IPlayer }
 interface State {}
 
 const styles = {
@@ -33,10 +34,35 @@ class Player extends Component<Props, State> {
     return `${player.firstname} ${player.lastname[0]}.`
   }
 
+  // TODO get the dates for next year if the date is passed for this year
+  getRemainingDays = (birthDay: Date) => {
+    
+    const dateForThisYear: Date = new Date(
+      (new Date)
+        .setFullYear((new Date).getFullYear(), 
+        birthDay.getMonth(), 
+        birthDay.getDate())
+      );
+
+      const nbDays: number = differenceInCalendarDays(dateForThisYear, new Date());
+
+      if (nbDays < 0) {
+        const dateForNextYear: Date = new Date(
+          (new Date)
+            .setFullYear((new Date).getFullYear() + 1, 
+            birthDay.getMonth(), 
+            birthDay.getDate())
+          );
+        return differenceInCalendarDays(dateForNextYear, new Date());
+      }
+
+    return nbDays;
+  }
+
   render() {
     return (
       <Card>
-        <CardHeader title={this.getFullName(this.props.player)} subheader="J-201 avant anniversaire"></CardHeader>
+        <CardHeader title={this.getFullName(this.props.player)} subheader={`J-${this.getRemainingDays(this.props.player.birthDate)} avant anniversaire`}></CardHeader>
         <CardContent>
           <Grid container style={styles.container}>
             <Typography color="textSecondary" gutterBottom style={styles.counter}>

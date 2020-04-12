@@ -16,8 +16,8 @@ class PlayerList extends Component<Props, State> {
       <Grid container spacing={2}>
         { 
           this.props.playerList.map(player => 
-            <Grid item xs={6} sm={4} md={2}>
-              <Player key={player.id} player={player}></Player>
+            <Grid item xs={6} sm={4} md={2} key={player.id}>
+              <Player player={player}></Player>
             </Grid>
           )
         }
