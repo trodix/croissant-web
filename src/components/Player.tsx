@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Player as IPlayer } from '../types';
+import { Player as IPlayer, UserRule } from '../types';
 import { Card, CardContent, Typography, CardActions, Button, Theme, createStyles, withStyles, WithStyles, CardHeader, Grid } from '@material-ui/core';
 import CoinCounter from './CoinCounter';
 import { differenceInCalendarDays } from 'date-fns';
@@ -70,14 +70,16 @@ class Player extends Component<Props, State> {
             </Typography>
             <img src={require('../assets/img/coin.png')} height="48" alt="coin"></img>
           </Grid>
-          <Typography color="textSecondary" style={styles.p}>
-            Nombre de chaises
-          </Typography>
-          <CoinCounter value={2}></CoinCounter>
-          <Typography color="textSecondary" style={styles.p}>
-            Nombre de portes
-          </Typography>
-          <CoinCounter value={1}></CoinCounter>
+            {
+              this.props.player!.userRules!.map((userRule: UserRule) => 
+                <div className="player-rule" key={userRule.rule.id}>
+                  <Typography color="textSecondary" style={styles.p}>
+                    {userRule.rule.name}
+                  </Typography>
+                  <CoinCounter value={userRule.coinsQuantity} max={userRule.rule.coinsCapacity}></CoinCounter>
+                </div>
+              )
+            }
         </CardContent>
         <CardActions>
           <Button color="primary">Reset</Button>

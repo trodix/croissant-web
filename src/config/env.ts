@@ -1,10 +1,12 @@
 export const apiConfig = {
-  host: 'https://localhost',
-  port: '5001'
+  protocol: 'http',
+  host: 'localhost',
+  port: '5000'
 };
 
-export const baseURL = `${apiConfig.host}:${apiConfig.port}/api`;
+export const baseURL = `${apiConfig.protocol}://${apiConfig.host}:${apiConfig.port}/api`;
 
 export const apiUrls = {
-  getAllPlayers: '/user'
+  getAllPlayers: '/user',
+  getTeam: '/team/1'
 };

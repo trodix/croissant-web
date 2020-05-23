@@ -1,5 +1,22 @@
-export interface Team {}
-export interface Rules {}
+export interface Team {
+  id: number;
+  name: string;
+  users?: Player[];
+  teamRules?: TeamRule[];
+}
+export interface TeamRule {
+  rule: Rule;
+}
+export interface Rule {
+  id: number;
+  name: string;
+  description: string;
+  coinsCapacity: number;
+}
+export interface UserRule {
+  rule: Rule;
+  coinsQuantity: number;
+}
 
 export interface Player {
   id: number;
@@ -7,7 +24,7 @@ export interface Player {
   lastname: string;
   firstname: string;
   birthDate: Date;
-  rules?: Rules;
+  userRules?: UserRule[];
 }
 
 export interface State {

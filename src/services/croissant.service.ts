@@ -6,8 +6,8 @@ import { Player } from '../types';
 class Croissant {
 
   fetchPlayerList(): Promise<Player[]> {
-    return axios.get(apiUrls.getAllPlayers)
-      .then((response: AxiosResponse ) => (response.data) as Player[]);
+    return axios.get(apiUrls.getTeam)
+      .then((response: AxiosResponse ) => (response.data.users) as Player[]);
   }
 
 }
