@@ -1,4 +1,4 @@
-import { FETCH_PLAYERS, Player } from '../types';
+import { FETCH_PLAYERS, INCREMENT_COUNTER, Player } from '../types';
 import { croissantService } from '../services';
 
 const fetchPlayers = () => {
@@ -16,7 +16,19 @@ const fetchPlayers = () => {
   };
 };
 
+const incrementCounter = (userId: number, ruleId: number) => {
+  console.log("#action.before");
+  return (dispatch: Function) => {
+    croissantService.incrementCounter(userId, ruleId)
+      .then((player: Player) => {
+        console.log("#action.after");
+        dispatch({ type: INCREMENT_COUNTER, player });
+      })
+  };
+}
+
 
 export const croissantActions = {
-  fetchPlayers
+  fetchPlayers,
+  incrementCounter
 };

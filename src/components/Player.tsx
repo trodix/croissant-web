@@ -76,7 +76,7 @@ class Player extends Component<Props, State> {
                   <Typography color="textSecondary" style={styles.p}>
                     {userRule.rule.name}
                   </Typography>
-                  <CoinCounter value={userRule.coinsQuantity} max={userRule.rule.coinsCapacity}></CoinCounter>
+                  <CoinCounter userRule={userRule} player={this.props.player}></CoinCounter>
                 </div>
               )
             }
