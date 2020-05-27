@@ -11,8 +11,12 @@ class Croissant {
   }
 
   incrementCounter(userId: number, ruleId: number): Promise<Player> {
-    console.log("#service.before");
-    return axios.put(apiUrls.increment(userId, ruleId));
+    return axios.put(apiUrls.increment(userId, ruleId))
+      .then((response: AxiosResponse) => {
+        const res: Player = response.data;
+        res.birthDate = new Date(res.birthDate);
+        return res;
+    });
   }
 
 }

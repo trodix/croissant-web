@@ -17,11 +17,9 @@ const fetchPlayers = () => {
 };
 
 const incrementCounter = (userId: number, ruleId: number) => {
-  console.log("#action.before");
   return (dispatch: Function) => {
     croissantService.incrementCounter(userId, ruleId)
       .then((player: Player) => {
-        console.log("#action.after");
         dispatch({ type: INCREMENT_COUNTER, player });
       })
   };

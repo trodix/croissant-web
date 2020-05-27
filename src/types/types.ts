@@ -35,7 +35,16 @@ export const FETCH_PLAYERS = 'FETCH_PLAYERS';
 
 export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
 
-export interface CroissantActionTypes {
+export interface FetchPlayerAction {
   type: typeof FETCH_PLAYERS;
   playerList: Player[];
 }
+
+export interface IncrementCounterAction {
+  type: typeof INCREMENT_COUNTER;
+  player: Player;
+}
+
+export type CroissantActionTypes = 
+  | FetchPlayerAction
+  | IncrementCounterAction;
