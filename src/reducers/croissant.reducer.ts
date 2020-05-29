@@ -1,4 +1,4 @@
-import { CroissantActionTypes, FETCH_PLAYERS, INCREMENT_COUNTER, Player, State } from '../types';
+import { CroissantActionTypes, FETCH_PLAYERS, UPDATE_USER, Player, State } from '../types';
 
 const initialState: State = {
   playerList: []
@@ -12,7 +12,7 @@ export const croissant = (state = initialState, action: CroissantActionTypes): S
         playerList: action.playerList.sort((a: Player, b: Player) => a.lastname <= b.lastname ? -1 : 1)
       };
 
-    case INCREMENT_COUNTER:
+    case UPDATE_USER:
       return {
         ...state,
         playerList: [

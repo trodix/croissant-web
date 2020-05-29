@@ -8,7 +8,6 @@ import { RootState } from '../reducers';
 interface Props { playerList: IPlayer[] }
 interface State {}
 
-// @connect(({ croissant: { playerList } }) => ({ playerList })) // TODO
 class PlayerList extends Component<Props, State> {
 
   render() {

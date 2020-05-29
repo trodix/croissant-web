@@ -1,3 +1,5 @@
+import { NextPaymentDate } from "../types";
+
 export const apiConfig = {
   protocol: 'http',
   host: 'localhost',
@@ -9,5 +11,7 @@ export const baseURL = `${apiConfig.protocol}://${apiConfig.host}:${apiConfig.po
 export const apiUrls = {
   getAllPlayers: () => '/user',
   getTeam: () =>'/team/1',
-  increment: (userId: number, ruleId: number) => `/user/${userId}/rule/${ruleId}/increment`
+  increment: (userId: number, ruleId: number) => `/user/${userId}/rule/${ruleId}/increment`,
+  updatePayday: (userId: number) => `/user/${userId}/payday`,
+  resetCounterRules: (userId: number) => `/user/${userId}/reset`
 };

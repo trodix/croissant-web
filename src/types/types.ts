@@ -24,7 +24,12 @@ export interface Player {
   lastname: string;
   firstname: string;
   birthDate: Date;
+  nextPaymentDate?: Date;
   userRules?: UserRule[];
+}
+
+export interface NextPaymentDate {
+  nextPaymentDate: Date;
 }
 
 export interface State {
@@ -33,7 +38,7 @@ export interface State {
 
 export const FETCH_PLAYERS = 'FETCH_PLAYERS';
 
-export const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
+export const UPDATE_USER = 'UPDATE_USER';
 
 export interface FetchPlayerAction {
   type: typeof FETCH_PLAYERS;
@@ -41,10 +46,16 @@ export interface FetchPlayerAction {
 }
 
 export interface IncrementCounterAction {
-  type: typeof INCREMENT_COUNTER;
+  type: typeof UPDATE_USER;
+  player: Player;
+}
+
+export interface PaydayAction {
+  type: typeof UPDATE_USER;
   player: Player;
 }
 
 export type CroissantActionTypes = 
   | FetchPlayerAction
-  | IncrementCounterAction;
+  | IncrementCounterAction
+  | PaydayAction;

@@ -1,9 +1,9 @@
 import { Grid } from '@material-ui/core';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { croissantActions } from '../actions/croissant.action';
 import '../App.css';
 import { Player, UserRule } from '../types';
-import { croissantActions } from '../actions/croissant.action'
-import { useDispatch } from 'react-redux';
 
 interface Props {
   userRule: UserRule;
@@ -33,12 +33,7 @@ function CoinCounter({ userRule, player }: Props) {
   }
 
   const handleIncrement = () => {
-    console.log(`increment for userId: ${player.id} and ruleId ${userRule.rule.id}`)
     dispatch(croissantActions.incrementCounter(player.id, userRule.rule.id));
-  }
-
-  const handleDefineDate = () => {
-    console.log(`set date for userId: ${player.id} and ruleId ${userRule.rule.id}`)
   }
 
   const dots = () => {
@@ -54,10 +49,10 @@ function CoinCounter({ userRule, player }: Props) {
   }
 
   let action = null;
-  if (userRule.coinsQuantity >= userRule.rule.coinsCapacity) {
-    action = <button onClick={handleDefineDate}>Définir date</button>
-  } else {
+  if (userRule.coinsQuantity < userRule.rule.coinsCapacity) {
     action = <button onClick={handleIncrement}>+</button>
+  } else {
+    action = null;
   }
 
   return (
