@@ -10,7 +10,7 @@ import DateFnsUtils from '@date-io/date-fns';
 import { croissantActions } from '../actions';
 
 interface Props { player: IPlayer }
-interface State {}
+interface State { }
 
 const styles = {
   title: {
@@ -51,37 +51,41 @@ function Player({ player }: Props) {
 
   // TODO get the dates for next year if the date is passed for this year
   const getRemainingDays = (birthDay: Date) => {
-    
+
     const dateForThisYear: Date = new Date(
       (new Date)
-        .setFullYear((new Date).getFullYear(), 
-        birthDay.getMonth(), 
-        birthDay.getDate())
-      );
+        .setFullYear((new Date).getFullYear(),
+          birthDay.getMonth(),
+          birthDay.getDate())
+    );
 
-      const nbDays: number = differenceInCalendarDays(dateForThisYear, new Date());
+    const nbDays: number = differenceInCalendarDays(dateForThisYear, new Date());
 
-      if (nbDays < 0) {
-        const dateForNextYear: Date = new Date(
-          (new Date)
-            .setFullYear((new Date).getFullYear() + 1, 
-            birthDay.getMonth(), 
+    if (nbDays < 0) {
+      const dateForNextYear: Date = new Date(
+        (new Date)
+          .setFullYear((new Date).getFullYear() + 1,
+            birthDay.getMonth(),
             birthDay.getDate())
-          );
-        return differenceInCalendarDays(dateForNextYear, new Date());
-      }
+      );
+      return differenceInCalendarDays(dateForNextYear, new Date());
+    }
 
     return nbDays;
   }
 
+  const hasFullCoins = (player: IPlayer) => {
+    return !!player.userRules?.find(pr => pr.coinsQuantity >= pr.rule.coinsCapacity)
+  }
+
   const renderDatePicker = () => {
-    if (false) return; // TODO
-    return( 
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <DatePicker value={selectedDate} onChange={handleDefineDate} format="dd/MM/yyyy" label="Date des croissants" />
-      </MuiPickersUtilsProvider>
-    )
-    ;
+    if (hasFullCoins(player)) {
+      return (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <DatePicker value={selectedDate} onChange={handleDefineDate} format="dd/MM/yyyy" label="Date des croissants" />
+        </MuiPickersUtilsProvider>
+      );
+    }
   }
 
   return (
@@ -90,21 +94,25 @@ function Player({ player }: Props) {
       <CardContent>
         <Grid container style={styles.container}>
           <Typography color="textSecondary" gutterBottom style={styles.counter}>
-          2
+            2
           </Typography>
           <img src={require('../assets/img/coin.png')} height="48" alt="coin"></img>
         </Grid>
-          {
-            player!.userRules!.map((userRule: UserRule) => 
-              <div className="player-rule" key={userRule.rule.id}>
-                <Typography color="textSecondary" style={styles.p}>
-                  {userRule.rule.name}
-                </Typography>
-                <CoinCounter userRule={userRule} player={player}></CoinCounter>
-              </div>
-            )
-          }
-          { renderDatePicker() }
+        {
+          player!.userRules!.map((userRule: UserRule) => {
+            if (userRule.rule.coinsCapacity > 0) {
+              return (
+                <div className="player-rule" key={userRule.rule.id}>
+                  <Typography color="textSecondary" style={styles.p}>
+                    {userRule.rule.name}
+                  </Typography>
+                  <CoinCounter userRule={userRule} player={player}></CoinCounter>
+                </div>
+              )
+            }
+          })
+        }
+        {renderDatePicker()}
       </CardContent>
       <CardActions>
         <Button color="primary" onClick={handleReset}>Reset</Button>
