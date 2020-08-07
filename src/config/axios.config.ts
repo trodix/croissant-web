@@ -1,8 +1,13 @@
-import axios, { AxiosInstance } from 'axios';
-import { baseURL } from '../config/env';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import { baseURL } from './env';
+import { authenticationService as AuthService} from '../services/authentication.service';
 
-const axiosConfig: AxiosInstance = axios.create({
-  baseURL
-});
+const authToken: string = AuthService.getCurrentUser()?.jwtToken;
 
-export default axiosConfig;
+const axiosConfig: AxiosRequestConfig = { baseURL, headers: {
+  Authorization: `Bearer ${authToken}`
+}};
+
+const axiosInstance: AxiosInstance = axios.create(axiosConfig);
+
+export default axiosInstance;

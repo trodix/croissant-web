@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Button, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Theme, createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { authenticationService as AuthService } from '../services';
 
-const styles = ({ spacing }: Theme) => createStyles({
+const useStyles = makeStyles(({ spacing }: Theme) => createStyles({
   root: {
     flexGrow: 1,
   },
@@ -13,28 +15,37 @@ const styles = ({ spacing }: Theme) => createStyles({
   title: {
     flexGrow: 1,
   }
-});
+}));
 
-class Header extends Component<WithStyles<typeof styles>> {
+const Header = () => {
 
-  render() {
-    const { classes } = this.props;
+  const history = useHistory();
+  const classes = useStyles();
 
-    return (
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            Croissant
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-    );
+  const currentUser = AuthService.getCurrentUser();
+
+  const handleLogout = () => {
+    AuthService.logout(() => history.push('/'))
   }
+
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="h6" className={classes.title}>
+          Croissant
+        </Typography>
+        { currentUser ? (
+          <Button color="inherit" onClick={handleLogout}>Logout</Button>
+        ) : (
+          <Button color="inherit" component={RouterLink} to="/login">Login</Button>
+        )}
+      </Toolbar>
+    </AppBar>
+  );
 
 }
 
-export default withStyles(styles)(Header);
+export default Header;
