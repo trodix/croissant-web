@@ -4,6 +4,15 @@ export interface Team {
   users?: Player[];
   teamRules?: TeamRule[];
 }
+
+export interface AuthenticatedUser {
+  id: number,
+  firstName: String,
+  lastName: String,
+  username: String,
+  jwtToken: String,
+  refreshToken: String
+}
 export interface TeamRule {
   rule: Rule;
 }

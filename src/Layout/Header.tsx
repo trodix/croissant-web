@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, AppBar, Toolbar, IconButton, Typography } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Theme, createStyles, makeStyles } from '@material-ui/core/styles';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { authenticationService as AuthService } from '../services';
+import { AuthenticatedUser } from '../types';
 
 const useStyles = makeStyles(({ spacing }: Theme) => createStyles({
   root: {
@@ -22,7 +23,7 @@ const Header = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const currentUser = AuthService.getCurrentUser();
+  const currentUser: AuthenticatedUser = AuthService.getCurrentUser();
 
   const handleLogout = () => {
     AuthService.logout(() => history.push('/'))

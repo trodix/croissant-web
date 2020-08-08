@@ -1,6 +1,6 @@
 import React, { useState, MouseEvent } from 'react';
 import { Player as IPlayer, UserRule } from '../types';
-import { Card, CardContent, Typography, CardActions, Button, Theme, createStyles, withStyles, WithStyles, CardHeader, Grid } from '@material-ui/core';
+import { Card, CardContent, Typography, CardActions, Button, withStyles, CardHeader, Grid } from '@material-ui/core';
 import CoinCounter from './CoinCounter';
 import { differenceInCalendarDays } from 'date-fns';
 import { useDispatch } from 'react-redux';
@@ -10,7 +10,6 @@ import DateFnsUtils from '@date-io/date-fns';
 import { croissantActions } from '../actions';
 
 interface Props { player: IPlayer }
-interface State { }
 
 const styles = {
   title: {
@@ -31,7 +30,7 @@ const styles = {
   }
 };
 
-function Player({ player }: Props) {
+const Player = ({ player }: Props) => {
 
   const dispatch = useDispatch();
   const [selectedDate, setSelectedDate] = useState<MaterialUiPickersDate>(player.nextPaymentDate || null);
@@ -53,8 +52,8 @@ function Player({ player }: Props) {
   const getRemainingDays = (birthDay: Date) => {
 
     const dateForThisYear: Date = new Date(
-      (new Date)
-        .setFullYear((new Date).getFullYear(),
+      (new Date())
+        .setFullYear((new Date()).getFullYear(),
           birthDay.getMonth(),
           birthDay.getDate())
     );
@@ -63,8 +62,8 @@ function Player({ player }: Props) {
 
     if (nbDays < 0) {
       const dateForNextYear: Date = new Date(
-        (new Date)
-          .setFullYear((new Date).getFullYear() + 1,
+        (new Date())
+          .setFullYear((new Date()).getFullYear() + 1,
             birthDay.getMonth(),
             birthDay.getDate())
       );
@@ -100,16 +99,15 @@ function Player({ player }: Props) {
         </Grid>
         {
           player!.userRules!.map((userRule: UserRule) => {
-            if (userRule.rule.coinsCapacity > 0) {
-              return (
-                <div className="player-rule" key={userRule.rule.id}>
-                  <Typography color="textSecondary" style={styles.p}>
-                    {userRule.rule.name}
-                  </Typography>
-                  <CoinCounter userRule={userRule} player={player}></CoinCounter>
-                </div>
-              )
-            }
+            return (
+              (userRule.rule.coinsCapacity > 0) &&
+              <div className="player-rule" key={userRule.rule.id}>
+                <Typography color="textSecondary" style={styles.p}>
+                  {userRule.rule.name}
+                </Typography>
+                <CoinCounter userRule={userRule} player={player}></CoinCounter>
+              </div>
+            );
           })
         }
         {renderDatePicker()}

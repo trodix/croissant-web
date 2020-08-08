@@ -1,27 +1,23 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PlayerList from '../components/PlayerList';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { croissantActions } from '../actions';
 
-interface Props {
-  dispatch: Function;
-}
+const Home = () => {
 
-class Home extends Component<Props> {
+  const dispatch = useDispatch();
 
-  componentDidMount() {
-    const { dispatch } = this.props;
+  useEffect(() => {
     dispatch(croissantActions.fetchPlayers());
-  }
+  });
 
-  render() {
-    return (
-      <div>
-        <h1>Home page</h1>
-        <PlayerList></PlayerList>
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h1>Home page</h1>
+      <PlayerList></PlayerList>
+    </div>
+  );
+  
 }
 
-export default connect()(Home);
+export default Home;

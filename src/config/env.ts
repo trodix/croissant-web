@@ -7,8 +7,9 @@ export const apiConfig = {
 export const baseURL = `${apiConfig.protocol}://${apiConfig.host}:${apiConfig.port}/api`;
 
 export const apiUrls = {
-  signin: () => 'authentication/authenticate',
-  signup: () => 'signup',
+  signin: () => '/authentication/authenticate',
+  signup: () => '/signup',
+  refreshToken: () => '/authentication/refresh-token',
   getAllPlayers: () => '/user',
   getTeam: () =>'/team/1',
   increment: (userId: number, ruleId: number) => `/user/${userId}/rule/${ruleId}/increment`,

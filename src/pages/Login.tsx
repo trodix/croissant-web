@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e: SyntheticEvent<EventTarget>) => {
     e.preventDefault()
     await AuthService.login(email, password);
-    history.replace(from !== 'login' ? from : '/');
+    history.replace(from);
   }
 
   return (

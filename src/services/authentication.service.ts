@@ -1,6 +1,7 @@
 import axios from '../config/axios.config';
 import { apiUrls } from '../config/env';
 import { AxiosResponse } from 'axios';
+import { AuthenticatedUser } from '../types';
 
 class AuthService {
 
@@ -9,7 +10,7 @@ class AuthService {
     const response: AxiosResponse<any> = await axios.post(apiUrls.signin(), { username, password });
 
     if (response.data.jwtToken) {
-      localStorage.setItem("user", JSON.stringify(response.data));
+      this.setCurrentUser(response.data);
     }
 
     return response.data;
@@ -24,8 +25,12 @@ class AuthService {
     return axios.post(apiUrls.signup(), { username, email, password });
   }
 
-  getCurrentUser() {
+  getCurrentUser(): AuthenticatedUser {
     return JSON.parse(localStorage.getItem('user') as string);;
+  }
+
+  setCurrentUser(user: AuthenticatedUser) {
+    localStorage.setItem("user", JSON.stringify(user));
   }
 
 }
